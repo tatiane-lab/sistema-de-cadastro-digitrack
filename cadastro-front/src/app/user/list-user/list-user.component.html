@@ -1,0 +1,106 @@
+<mat-card fxFlex.xs="100%">
+  <h2>Lista de pessoas</h2>
+<br>
+<!-- Filtro -->
+<h2>Filtros de pessoas</h2>
+<mat-form-field class="filter">
+  <mat-label>Data de nascimento</mat-label>
+  <input #dataInput matInput [matDatepicker]="picker" (dateChange)="onChange($event.value)" (click)="picker.open()" id="dataNascimento" readonly>
+  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+  <mat-datepicker #picker></mat-datepicker>
+</mat-form-field>
+
+
+<mat-form-field appearance="fill" class="filter">
+  <mat-label>Sexo</mat-label>
+  <mat-select (selectionChange)="onChangeSexo($event.value)" id="sexo">
+    <mat-option value="M">Masculino</mat-option>
+    <mat-option value="F">Faminino</mat-option>
+    <mat-option value="">Todos</mat-option>
+  </mat-select>
+</mat-form-field>
+
+<button class="filter-button" mat-menu-item color="warn" (click)="limparFiltros()">
+  <span>Limpar filtros</span>
+</button>
+<br>
+<!-- Table -->
+  <div class="spinner-container" *ngIf="dataSource.loading$ | async">
+    <mat-spinner></mat-spinner>
+  </div>
+  <table mat-table class="td-table mat-elevation-z8" [dataSource]="dataSource" matSortActive="nome"
+    matSortDirection="asc" matSort>
+
+    <ng-container matColumnDef="id" >
+      <th mat-sort-header="id" mat-header-cell *matHeaderCellDef>Id</th>
+      <td mat-cell class="td-name" *matCellDef="let pessoa" [routerLink]="['/pessoas/detail', pessoa.id]">
+        <span>{{pessoa.id}}</span>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="nome" >
+      <th mat-sort-header="nome" mat-header-cell *matHeaderCellDef>Nome</th>
+      <td mat-cell class="td-name" *matCellDef="let pessoa" [routerLink]="['/pessoas/detail', pessoa.id]">
+        <span>{{pessoa.nome}}</span>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="email" >
+      <th mat-sort-header="email" mat-header-cell *matHeaderCellDef>Email</th>
+      <td mat-cell class="td-name" *matCellDef="let pessoa" [routerLink]="['/pessoas/detail', pessoa.id]">
+        <span>{{pessoa.email}}</span>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="telefone">
+      <th mat-sort-header="telefone" mat-header-cell *matHeaderCellDef>Telefone</th>
+      <td mat-cell *matCellDef="let pessoa"  class="td-name" [routerLink]="['/pessoas/detail', pessoa.id]">
+        <span>{{pessoa.telefone}}</span>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="descricao">
+      <th mat-sort-header="descricao" mat-header-cell *matHeaderCellDef>Descricao</th>
+      <td mat-cell *matCellDef="let pessoa" class="td-name" [routerLink]="['/pessoas/detail', pessoa.id]">
+        <span>{{pessoa.descricao}}</span>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="cpf">
+      <th mat-sort-header="cpf" mat-header-cell *matHeaderCellDef>CPF</th>
+      <td mat-cell *matCellDef="let pessoa" class="td-name" [routerLink]="['/pessoas/detail', pessoa.id]">
+        <span>{{pessoa.cpf}}</span>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="sexo">
+      <th mat-sort-header="sexo" mat-header-cell *matHeaderCellDef>Sexo</th>
+      <td mat-cell *matCellDef="let pessoa" class="td-name" [routerLink]="['/pessoas/detail', pessoa.id]">
+        <span>{{pessoa.sexo}}</span>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="dataNascimento">
+      <th mat-sort-header="dataNascimento" mat-header-cell *matHeaderCellDef>Data de Nascimento</th>
+      <td mat-cell *matCellDef="let pessoa" class="td-name" [routerLink]="['/pessoas/detail', pessoa.id]">
+        <span>{{pessoa.dataNascimento | date: 'dd/MM/yyyy'}}</span>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-sort-header="actions" mat-header-cell *matHeaderCellDef>Actions</th>
+      <td mat-cell *matCellDef="let pessoa" class="td-name">
+        <button mat-menu-item color="warn" (click)="onDelete(pessoa.id, pessoa.nome)">
+          <mat-icon>delete</mat-icon>
+          <!-- <span>Deletar</span> -->
+        </button>
+        <button mat-menu-item color="warn" [routerLink]="['/pessoas/edit', pessoa.id]">
+          <mat-icon>edit</mat-icon>
+          <!-- <span>Editar</span> -->
+        </button>
+        <button mat-menu-item color="warn"  [routerLink]="['/pessoas/detail', pessoa.id]">
+          <mat-icon>remove_red_eye</mat-icon>
+          <!-- <span>Visualizar</span> -->
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let myRowData; columns: displayedColumns"></tr>
+  </table>
+  <mat-paginator [length]="length" [pageSize]="10" [pageSizeOptions]="[10, 50, 100]"></mat-paginator>
+</mat-card>

@@ -1,0 +1,11 @@
+<mat-toolbar color="primary">
+  <span>Pessoas</span>
+  <span class="example-spacer"></span>
+  <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon" [routerLink]="['/pessoas/list']">
+    <span class="material-icons">home</span>
+  </button>
+  <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon" [routerLink]="['/pessoas/add']">
+    <mat-icon>person_add_alt</mat-icon>
+  </button>
+</mat-toolbar>
+<router-outlet></router-outlet>

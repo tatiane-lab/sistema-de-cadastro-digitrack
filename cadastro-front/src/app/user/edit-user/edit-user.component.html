@@ -1,0 +1,92 @@
+
+<mat-card fxFlex.xs="100%">
+  <h2>Editar pessoa</h2>
+  <form [formGroup]="pessoaForm" autocomplete="off" novalidate fxLayout="column wrap" fxLayoutGap="2px"
+        (ngSubmit)="onSubmit(pessoaForm.value)">
+    <mat-card-content fxLayout="column">
+      <!-- nome: string, sobrenome: string, cpf: string, dataNascimento: Date, email: string, sexo: string, endereco: Endereco, telefone?: string, descricao?: string) -->
+      <!-- Dados básicos -->
+      <mat-form-field>
+        <input matInput type="text" placeholder="Nome" formControlName="nome" id="nome" required>
+        <mat-error *ngIf="hasError('nome', 'required')">Nome é obrigatório</mat-error>
+        <mat-error *ngIf="hasError('nome', 'maxlength')">Nome não deve ter mais do que 60 caracteres</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput type="text" placeholder="Sobrenome" formControlName="sobrenome" id="sobrenome" required>
+        <mat-error *ngIf="hasError('sobrenome', 'required')">Sobrenome é obrigatório</mat-error>
+        <mat-error *ngIf="hasError('sobrenome', 'maxlength')">Sobrenome não deve ter mais do que 60 caracteres</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput type="text" placeholder="CPF" formControlName="cpf" id="cpf" required>
+        <mat-error *ngIf="hasError('cpf', 'required')">CPF é obrigatório</mat-error>
+        <mat-error *ngIf="hasError('cpf', 'maxlength')">CPF não deve ter mais do que 11 caracteres</mat-error>
+        <mat-error *ngIf="hasError('cpf', 'minlength')">CPF não deve ter menos do que 11 caracteres</mat-error>
+        <mat-error *ngIf="hasError('cpf', 'pattern')">CPF inválido</mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Data de nascimento</mat-label>
+        <input matInput [max]="maxDate" [matDatepicker]="picker" (click)="picker.open()" formControlName="dataNascimento" id="dataNascimento" required readonly>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput type="text" placeholder="Email" formControlName="email" id="email" required>
+        <mat-error *ngIf="hasError('email', 'required')">Email é obrigatório</mat-error>
+        <mat-error *ngIf="hasError('email', 'maxlength')">Email não deve ter mais do que 60 caracteres</mat-error>
+      </mat-form-field>
+
+
+        <mat-form-field appearance="fill">
+          <mat-label>Sexo</mat-label>
+          <mat-select formControlName="sexo" id="sexo">
+            <mat-option value="M">Masculino</mat-option>
+            <mat-option value="F">Faminino</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+
+
+      <!-- Opcionais -->
+      <mat-form-field>
+        <input matInput type="text" placeholder="Telefone" formControlName="telefone" id="telefone">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput type="text" placeholder="Descrição" formControlName="descricao" id="descricao">
+      </mat-form-field>
+
+      <!-- Endereco -->
+
+      <mat-form-field>
+        <input matInput type="text" placeholder="Cidade" formControlName="cidade" id="cidade" required>
+        <mat-error *ngIf="hasError('cidade', 'required')">Cidade é obrigatório</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput type="text" placeholder="Endereco" (blur)="atualizarMapa($event.target.value)" formControlName="endereco" id="endereco" required>
+        <mat-error *ngIf="hasError('endereco', 'required')">Endereco é obrigatório</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput type="text" placeholder="Bairro" formControlName="bairro" id="bairro" required>
+        <mat-error *ngIf="hasError('bairro', 'required')">Bairro é obrigatório</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput type="text" placeholder="Numero" formControlName="numero" id="numero" required>
+        <mat-error *ngIf="hasError('numero', 'required')">Número é obrigatório</mat-error>
+      </mat-form-field>
+
+      <!-- Mapa -->
+
+      <h1>{{ title }}</h1>
+
+      <agm-map [latitude]="lat" [longitude]="lng">
+        <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+      </agm-map>
+
+    </mat-card-content>
+    <mat-card-actions align="center">
+      <button mat-raised-button color="primary" [disabled]="!pessoaForm.valid">Atualizar</button>
+      <button type="button" mat-raised-button color="warn" (click)="gotoList()">Cancelar</button>
+    </mat-card-actions>
+  </form>
+</mat-card>

@@ -1,0 +1,87 @@
+<section *ngIf="pessoa$ | async as pessoa">
+  <mat-card>
+    <mat-card-title fxLayout="row" fxLayoutAlign="space-between start">
+      <button mat-icon-button [routerLink]="['/pessoas/list']">
+        <mat-icon>keyboard_backspace</mat-icon>
+      </button>
+
+      <span>{{pessoa.nome}}</span>
+    </mat-card-title>
+    <mat-card-content fxLayout="column" fxLayoutGap="10px">
+      <mat-card fxLayout="column" fxLayoutGap="10px">
+        <!-- Campos basicos -->
+        <div fxFlex fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+          <div class="label">Nome:</div>
+          <div fxFlex>{{pessoa.nome}}</div>
+        </div><br>
+        <div fxFlex fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+          <div class="label">Sobrenome:</div>
+          <div fxFlex>{{pessoa.sobrenome}}</div>
+        </div><br>
+        <div fxFlex fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+          <div class="label">CPF:</div>
+          <div fxFlex>{{pessoa.cpf}}</div>
+        </div><br>
+        <div fxFlex fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+          <div class="label">Sexo:</div>
+          <div fxFlex>{{pessoa.sexo}}</div>
+        </div><br>
+        <div fxFlex fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+          <div class="label">Data de nascimento:</div>
+          <div fxFlex>{{pessoa.dataNascimento | date: 'dd/MM/yyyy'}}</div>
+        </div><br>
+        <div fxFlex fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+          <div class="label">Email:</div>
+          <div fxFlex>{{pessoa.email}}</div>
+        </div><br>
+
+        <!-- Opcionais -->
+        <div fxFlex fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+          <div class="label">Telefone:</div>
+          <div fxFlex>{{pessoa.telefone}}</div>
+        </div><br>
+        <div fxFlex fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+          <div class="label">Descição:</div>
+          <div fxFlex>{{pessoa.descricao}}</div>
+        </div><br>
+
+        <!-- Endereço -->
+        <div fxFlex fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+          <div class="label">Cidade:</div>
+          <div fxFlex>{{pessoa.endereco.cidade}}</div>
+        </div><br>
+        <div fxFlex fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+          <div class="label">Endereco:</div>
+          <div fxFlex>{{pessoa.endereco.endereco}}</div>
+        </div><br>
+        <div fxFlex fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+          <div class="label">Numero:</div>
+          <div fxFlex>{{pessoa.endereco.numero}}</div>
+        </div><br>
+        <div fxFlex fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+          <div class="label">Bairro:</div>
+          <div fxFlex>{{pessoa.endereco.bairro}}</div>
+        </div><br>
+
+        <!-- Data de modificações -->
+        <div fxFlex fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+          <div class="label">Data de criação:</div>
+          <div fxFlex>{{pessoa.createdAt}}</div>
+        </div><br>
+        <div fxFlex fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+          <div class="label">Data de atualização:</div>
+          <div fxFlex>{{pessoa.updatedAt}}</div>
+        </div><br>
+
+        <h1>Endereco - Mapa</h1>
+
+        <agm-map [latitude]="lat" [longitude]="lng">
+          <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+        </agm-map>
+
+
+      </mat-card>
+
+    </mat-card-content>
+  </mat-card>
+</section>
